@@ -65,7 +65,7 @@ public final class QueryBuilder {
         return new Clause.SimpleClause(name, " LIKE ", value);
     }
 
-    public static Clause contains(String name, Object value) {
+    public static Clause contains(String name, String value) {
         return new Clause.ContainsClause(name, value);
     }
 

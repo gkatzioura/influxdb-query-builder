@@ -66,35 +66,6 @@ public abstract class Clause extends Utils.Appendeable {
         }
     }
 
-    static class ContainsClause extends AbstractClause {
-
-        private final Object value;
-
-        ContainsClause(String name, Object value) {
-            super(name);
-            this.value = value;
-
-            if (value == null)
-                throw new IllegalArgumentException("Missing value for CONTAINS clause");
-        }
-
-        @Override
-        void appendTo(StringBuilder sb) {
-            Utils.appendName(name, sb).append(" CONTAINS ");
-            Utils.appendValue(value, sb);
-        }
-
-        @Override
-        Object firstValue() {
-            return value;
-        }
-
-        @Override
-        boolean containsBindMarker() {
-            return Utils.containsBindMarker(value);
-        }
-    }
-
     static class RegexClause extends AbstractClause {
 
         private final Utils.RawString value;
@@ -119,6 +90,13 @@ public abstract class Clause extends Utils.Appendeable {
 
         @Override boolean containsBindMarker() {
             return Utils.containsBindMarker(value);
+        }
+    }
+
+    static class ContainsClause extends RegexClause {
+
+        ContainsClause(String name, String value) {
+            super(name,"/*"+value+"*/");
         }
     }
 
