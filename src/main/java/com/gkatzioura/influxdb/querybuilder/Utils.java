@@ -93,7 +93,6 @@ abstract class Utils {
 
     static StringBuilder appendName(String name, StringBuilder sb) {
         name = name.trim();
-        // FIXME: checking for token( specifically is uber ugly, we'll need some better solution.
         if (name.startsWith("\"") || name.startsWith("token(") || cnamePattern.matcher(name).matches())
             sb.append(name);
         else
@@ -159,7 +158,6 @@ abstract class Utils {
         private final Object[] parameters;
 
         FCall(String name, Object... parameters) {
-            //TODO checkNotNull(name);
             this.name = name;
             this.parameters = parameters;
         }

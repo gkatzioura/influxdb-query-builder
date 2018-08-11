@@ -61,10 +61,6 @@ public final class QueryBuilder {
         return new Clause.CompoundClause(names, "!=", values);
     }
 
-    public static Clause notNull(String name) {
-        return new Clause.IsNotNullClause(name);
-    }
-
     public static Clause like(String name, Object value) {
         return new Clause.SimpleClause(name, " LIKE ", value);
     }

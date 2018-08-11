@@ -66,28 +66,6 @@ public abstract class Clause extends Utils.Appendeable {
         }
     }
 
-    static class IsNotNullClause extends AbstractClause {
-
-        IsNotNullClause(String name) {
-            super(name);
-        }
-
-        @Override
-        void appendTo(StringBuilder sb) {
-            Utils.appendName(name, sb).append(" IS NOT NULL");
-        }
-
-        @Override
-        Object firstValue() {
-            return null;
-        }
-
-        @Override
-        boolean containsBindMarker() {
-            return false;
-        }
-    }
-
     static class ContainsClause extends AbstractClause {
 
         private final Object value;
