@@ -19,6 +19,8 @@ package com.gkatzioura.influxdb.querybuilder;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.gkatzioura.influxdb.querybuilder.Operations.*;
+
 
 public final class QueryBuilder {
 
@@ -46,62 +48,59 @@ public final class QueryBuilder {
     }
 
     public static Clause eq(String name, Object value) {
-        return new Clause.SimpleClause(name, "=", value);
+        return new Clause.SimpleClause(name, EQ, value);
     }
 
     public static Clause eq(List<String> names, List<?> values) {
-        return new Clause.CompoundClause(names, "=", values);
+        return new Clause.CompoundClause(names, EQ, values);
     }
 
     public static Clause ne(String name, Object value) {
-        return new Clause.SimpleClause(name, "!=", value);
+        return new Clause.SimpleClause(name, NE, value);
     }
 
     public static Clause ne(List<String> names, List<?> values) {
-        return new Clause.CompoundClause(names, "!=", values);
-    }
-
-    public static Clause like(String name, Object value) {
-        return new Clause.SimpleClause(name, " LIKE ", value);
+        return new Clause.CompoundClause(names, NE, values);
     }
 
     public static Clause contains(String name, String value) {
         return new Clause.ContainsClause(name, value);
     }
 
-    public static Clause regex(String name, String value) { return new Clause.RegexClause(name,value);
+    public static Clause regex(String name, String value) {
+        return new Clause.RegexClause(name, value);
     }
 
     public static Clause lt(String name, Object value) {
-        return new Clause.SimpleClause(name, "<", value);
+        return new Clause.SimpleClause(name, LT, value);
     }
 
     public static Clause lt(List<String> names, List<?> values) {
-        return new Clause.CompoundClause(names, "<", values);
+        return new Clause.CompoundClause(names, LT, values);
     }
 
     public static Clause lte(String name, Object value) {
-        return new Clause.SimpleClause(name, "<=", value);
+        return new Clause.SimpleClause(name, LTE, value);
     }
 
     public static Clause lte(List<String> names, List<?> values) {
-        return new Clause.CompoundClause(names, "<=", values);
+        return new Clause.CompoundClause(names, LTE, values);
     }
 
     public static Clause gt(String name, Object value) {
-        return new Clause.SimpleClause(name, ">", value);
+        return new Clause.SimpleClause(name, GT, value);
     }
 
     public static Clause gt(List<String> names, List<?> values) {
-        return new Clause.CompoundClause(names, ">", values);
+        return new Clause.CompoundClause(names, GT, values);
     }
 
     public static Clause gte(String name, Object value) {
-        return new Clause.SimpleClause(name, ">=", value);
+        return new Clause.SimpleClause(name, GTE, value);
     }
 
     public static Clause gte(List<String> names, List<?> values) {
-        return new Clause.CompoundClause(names, ">=", values);
+        return new Clause.CompoundClause(names, GTE, values);
     }
 
     /**
@@ -134,7 +133,6 @@ public final class QueryBuilder {
     public static Object fcall(String name, Object... parameters) {
         return new Utils.FCall(name, parameters);
     }
-
 
     public static Object now() {
         return new Utils.FCall("now");
