@@ -22,9 +22,6 @@ import java.util.Collections;
 import java.util.List;
 
 
-/**
- * A built SELECT statement.
- */
 public class Select extends BuiltStatement {
 
     private static final List<Object> COUNT_ALL = Collections.<Object>singletonList(new Utils.FCall("count", new Utils.RawString("*")));
@@ -38,13 +35,6 @@ public class Select extends BuiltStatement {
     private Integer limit;
     private Long offSet;
 
-    /**
-     * TODO investigate quoting
-     * @param database
-     * @param table
-     * @param columns
-     * @param isDistinct
-     */
     Select(String database,
            String table,
            List<Object> columns,
