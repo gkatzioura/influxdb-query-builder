@@ -93,9 +93,6 @@ public abstract class BuiltStatement extends RegularStatement {
     }
 
 
-    /**
-     * An utility class to create a BuiltStatement that encapsulate another one.
-     */
     abstract static class ForwardingStatement<T extends BuiltStatement> extends BuiltStatement {
 
         T statement;
