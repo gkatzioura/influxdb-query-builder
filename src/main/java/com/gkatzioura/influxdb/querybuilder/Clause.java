@@ -117,7 +117,6 @@ public abstract class Clause extends Utils.Appendeable {
         }
     }
 
-    //TODO who uses the compound clause ????
     static class CompoundClause extends Clause {
         private String op;
         private final List<String> names;
