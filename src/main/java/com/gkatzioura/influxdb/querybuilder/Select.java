@@ -24,7 +24,7 @@ import java.util.List;
 
 public class Select extends BuiltStatement {
 
-    private static final List<Object> COUNT_ALL = Collections.<Object>singletonList(new Utils.FCall("count", new Utils.RawString("*")));
+    private static final List<Object> COUNT_ALL = Collections.singletonList(new Utils.FCall("count", new Utils.RawString("*")));
 
     private final String table;
     private final boolean isDistinct;
