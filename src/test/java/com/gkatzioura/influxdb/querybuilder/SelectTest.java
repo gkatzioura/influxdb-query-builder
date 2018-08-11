@@ -18,8 +18,6 @@ package com.gkatzioura.influxdb.querybuilder;
 
 import org.junit.jupiter.api.Test;
 
-import com.gkatzioura.influxdb.querybuilder.statement.Statement;
-
 import static com.gkatzioura.influxdb.querybuilder.QueryBuilder.select;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

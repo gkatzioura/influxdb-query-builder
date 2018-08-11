@@ -2,8 +2,6 @@ package com.gkatzioura.influxdb.querybuilder;
 
 import org.junit.jupiter.api.Test;
 
-import com.gkatzioura.influxdb.querybuilder.statement.Statement;
-
 import static com.gkatzioura.influxdb.querybuilder.QueryBuilder.contains;
 import static com.gkatzioura.influxdb.querybuilder.QueryBuilder.regex;
 import static com.gkatzioura.influxdb.querybuilder.QueryBuilder.select;

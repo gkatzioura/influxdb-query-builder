@@ -16,8 +16,6 @@
 
 package com.gkatzioura.influxdb.querybuilder;
 
-import com.gkatzioura.influxdb.querybuilder.statement.RegularStatement;
-
 public abstract class BuiltStatement extends RegularStatement {
 
     final String database;

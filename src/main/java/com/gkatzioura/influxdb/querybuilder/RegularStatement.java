@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.gkatzioura.influxdb.querybuilder.statement;
+package com.gkatzioura.influxdb.querybuilder;
 
 public abstract class RegularStatement extends Statement {
 
