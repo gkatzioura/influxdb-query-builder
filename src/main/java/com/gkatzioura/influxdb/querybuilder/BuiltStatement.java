@@ -16,10 +16,6 @@
 
 package com.gkatzioura.influxdb.querybuilder;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import com.gkatzioura.influxdb.querybuilder.statement.RegularStatement;
 
 public abstract class BuiltStatement extends RegularStatement {

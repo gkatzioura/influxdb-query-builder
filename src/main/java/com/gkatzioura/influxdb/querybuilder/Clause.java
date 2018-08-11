@@ -95,6 +95,33 @@ public abstract class Clause extends Utils.Appendeable {
         }
     }
 
+    static class RegexClause extends AbstractClause {
+
+        private final Utils.RawString value;
+
+        RegexClause(String name, String value) {
+            super(name);
+            this.value = new Utils.RawString(value);
+
+            if (value == null)
+                throw new IllegalArgumentException("Missing value for regex clause");
+        }
+
+        @Override
+        Object firstValue() {
+            return value;
+        }
+
+        @Override void appendTo(StringBuilder sb) {
+            Utils.appendName(name, sb).append(" =~ ");
+            Utils.appendValue(value, sb);
+        }
+
+        @Override boolean containsBindMarker() {
+            return Utils.containsBindMarker(value);
+        }
+    }
+
     static class CompoundClause extends Clause {
         private String op;
         private final List<String> names;

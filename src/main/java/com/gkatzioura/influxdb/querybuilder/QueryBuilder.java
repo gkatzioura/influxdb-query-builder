@@ -69,6 +69,9 @@ public final class QueryBuilder {
         return new Clause.ContainsClause(name, value);
     }
 
+    public static Clause regex(String name, String value) { return new Clause.RegexClause(name,value);
+    }
+
     public static Clause lt(String name, Object value) {
         return new Clause.SimpleClause(name, "<", value);
     }
