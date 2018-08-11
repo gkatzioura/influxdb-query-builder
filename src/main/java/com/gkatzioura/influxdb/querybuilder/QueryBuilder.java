@@ -34,14 +34,7 @@ public final class QueryBuilder {
     }
 
     public static Select.Selection select() {
-        // Note: the fact we return Select.Selection as return type is on purpose.
         return new Select.SelectionOrAlias();
-    }
-
-    public static String quote(String columnName) {
-
-        //TODO return a more sophisticated quoting
-        return "\""+columnName+"\"";
     }
 
     public static String token(String columnName) {

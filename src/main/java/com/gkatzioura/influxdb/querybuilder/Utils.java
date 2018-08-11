@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
 
 abstract class Utils {
 
-    private static final Pattern alphanumeric = Pattern.compile("\\w+"); // this includes _
     private static final Pattern cnamePattern = Pattern.compile("\\w+(?:\\[.+\\])?");
 
 
@@ -180,7 +179,6 @@ abstract class Utils {
 
     }
 
-    //TODO needed?
     static class CName {
         private final String name;
 
