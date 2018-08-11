@@ -198,10 +198,11 @@ public class Select extends BuiltStatement {
 
     public static abstract class Selection extends Builder {
 
+        //TODO make it more elegant
         @Override
         public Selection distinct(String column) {
 
-            if(columnNames!=null) {
+            if (columnNames != null) {
                 throw new IllegalStateException("DISTINCT function can only be used with one column");
             }
 
@@ -250,12 +251,6 @@ public class Select extends BuiltStatement {
 
         private Object previousSelection;
 
-        /**
-         * Adds an alias for the just selected item.
-         *
-         * @param alias the name of the alias to use.
-         * @return this in-build SELECT statement
-         */
         public Selection as(String alias) {
             assert previousSelection != null;
             Object a = new Utils.Alias(previousSelection, alias);
