@@ -50,9 +50,9 @@ public abstract class Clause extends Utils.Appendeable {
         }
 
         @Override
-        void appendTo(StringBuilder sb, List<Object> variables) {
+        void appendTo(StringBuilder sb) {
             Utils.appendName(name, sb).append(op);
-            Utils.appendValue(value, sb, variables);
+            Utils.appendValue(value, sb);
         }
 
         @Override
@@ -73,7 +73,7 @@ public abstract class Clause extends Utils.Appendeable {
         }
 
         @Override
-        void appendTo(StringBuilder sb, List<Object> values) {
+        void appendTo(StringBuilder sb) {
             Utils.appendName(name, sb).append(" IS NOT NULL");
         }
 
@@ -101,9 +101,9 @@ public abstract class Clause extends Utils.Appendeable {
         }
 
         @Override
-        void appendTo(StringBuilder sb, List<Object> variables) {
+        void appendTo(StringBuilder sb) {
             Utils.appendName(name, sb).append(" CONTAINS ");
-            Utils.appendValue(value, sb, variables);
+            Utils.appendValue(value, sb);
         }
 
         @Override
@@ -149,7 +149,7 @@ public abstract class Clause extends Utils.Appendeable {
         }
 
         @Override
-        void appendTo(StringBuilder sb, List<Object> variables) {
+        void appendTo(StringBuilder sb) {
             sb.append("(");
             for (int i = 0; i < names.size(); i++) {
                 if (i > 0)
@@ -160,7 +160,7 @@ public abstract class Clause extends Utils.Appendeable {
             for (int i = 0; i < values.size(); i++) {
                 if (i > 0)
                     sb.append(",");
-                Utils.appendValue(values.get(i), sb, variables);
+                Utils.appendValue(values.get(i), sb);
             }
             sb.append(")");
         }

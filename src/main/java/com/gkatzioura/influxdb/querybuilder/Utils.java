@@ -25,11 +25,11 @@ abstract class Utils {
     private static final Pattern cnamePattern = Pattern.compile("\\w+(?:\\[.+\\])?");
 
 
-    static StringBuilder joinAndAppend(StringBuilder sb, String separator, List<? extends Appendeable> values, List<Object> variables) {
+    static StringBuilder joinAndAppend(StringBuilder sb, String separator, List<? extends Appendeable> values) {
         for (int i = 0; i < values.size(); i++) {
             if (i > 0)
                 sb.append(separator);
-            values.get(i).appendTo(sb, variables);
+            values.get(i).appendTo(sb);
         }
         return sb;
     }
@@ -43,16 +43,16 @@ abstract class Utils {
         return sb;
     }
 
-    static StringBuilder joinAndAppendValues(StringBuilder sb, List<?> values, List<Object> variables) {
+    static StringBuilder joinAndAppendValues(StringBuilder sb, List<?> values) {
         for (int i = 0; i < values.size(); i++) {
             if (i > 0)
                 sb.append(",");
-            appendValue(values.get(i), sb, variables);
+            appendValue(values.get(i), sb);
         }
         return sb;
     }
 
-    static StringBuilder appendValue(Object value, StringBuilder sb, List<Object> variables) {
+    static StringBuilder appendValue(Object value, StringBuilder sb) {
         if (value == null) {
             sb.append("null");
         } else if (value instanceof BindMarker) {
@@ -63,7 +63,7 @@ abstract class Utils {
             for (int i = 0; i < fcall.parameters.length; i++) {
                 if (i > 0)
                     sb.append(',');
-                appendValue(fcall.parameters[i], sb, variables);
+                appendValue(fcall.parameters[i], sb);
             }
             sb.append(')');
             //CName?
@@ -71,15 +71,12 @@ abstract class Utils {
             appendName(((CName) value).name, sb);
         } else if (value instanceof RawString) {
             sb.append(value.toString());
-        } else if (variables == null ) {
-            if(value instanceof String) {
-                sb.append("'").append(value).append("'");
-            } else {
-                sb.append(value);
-            }
+        } else if (value instanceof String ) {
+            sb.append("'").append(value).append("'");
+        } else if (value != null) {
+            sb.append(value);
         } else {
             sb.append('?');
-            variables.add(value);
             return sb;
         }
         return sb;
@@ -123,7 +120,7 @@ abstract class Utils {
             for (int i = 0; i < fcall.parameters.length; i++) {
                 if (i > 0)
                     sb.append(',');
-                appendValue(fcall.parameters[i], sb, null);
+                appendValue(fcall.parameters[i], sb);
             }
             sb.append(')');
         } else if (name instanceof Alias) {
@@ -139,7 +136,7 @@ abstract class Utils {
     }
 
     static abstract class Appendeable {
-        abstract void appendTo(StringBuilder sb, List<Object> values);
+        abstract void appendTo(StringBuilder sb);
 
         abstract boolean containsBindMarker();
     }

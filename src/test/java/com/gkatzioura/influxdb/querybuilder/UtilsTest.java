@@ -31,7 +31,7 @@ public class UtilsTest {
         StringBuilder builder = new StringBuilder();
         builder.append("SELECT test1,test2 FROM foo WHERE ");
 
-        Utils.joinAndAppend(builder, " AND ", Collections.singletonList(eq("testval", "test1")), null);
+        Utils.joinAndAppend(builder, " AND ", Collections.singletonList(eq("testval", "test1")));
 
         assertEquals("SELECT test1,test2 FROM foo WHERE testval='test1'",builder.toString());
     }

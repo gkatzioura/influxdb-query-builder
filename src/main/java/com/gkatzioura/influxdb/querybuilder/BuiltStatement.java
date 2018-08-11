@@ -28,11 +28,8 @@ public abstract class BuiltStatement extends RegularStatement {
 
     private boolean dirty;
     private String cache;
-    private List<Object> values;
     Boolean isCounterOp;
-
     boolean hasBindMarkers;
-    private boolean forceNoValues;
 
     BuiltStatement(String database) {
         this.database = database;
@@ -44,35 +41,11 @@ public abstract class BuiltStatement extends RegularStatement {
         return cache;
     }
 
-    public Object getObject(int i) {
-        maybeRebuildCache();
-        if (values == null || values.isEmpty())
-            throw new IllegalStateException("This statement does not have values");
-        if (i < 0 || i >= values.size())
-            throw new ArrayIndexOutOfBoundsException(i);
-        return values.get(i);
-    }
-
     private void maybeRebuildCache() {
         if (!dirty && cache != null)
             return;
 
-        StringBuilder sb;
-        values = null;
-
-        if (hasBindMarkers || forceNoValues) {
-            sb = buildQueryString(null);
-        } else {
-            values = new ArrayList<Object>();
-            sb = buildQueryString(values);
-
-            if (values.size() > 65535)
-                throw new IllegalArgumentException("Too many values for built statement, the maximum allowed is 65535");
-
-            if (values.isEmpty())
-                values = null;
-        }
-
+        StringBuilder sb = buildQueryString();
         maybeAddSemicolon(sb);
 
         cache = sb.toString();
@@ -93,14 +66,10 @@ public abstract class BuiltStatement extends RegularStatement {
         return sb;
     }
 
-    abstract StringBuilder buildQueryString(List<Object> variables);
+    abstract StringBuilder buildQueryString();
 
     boolean isCounterOp() {
         return isCounterOp == null ? false : isCounterOp;
-    }
-
-    void setCounterOp(boolean isCounterOp) {
-        this.isCounterOp = isCounterOp;
     }
 
     void setDirty() {
@@ -125,47 +94,8 @@ public abstract class BuiltStatement extends RegularStatement {
     }
 
     @Override
-    public Object[] getValues() {
-        maybeRebuildCache();
-        return values.toArray();
-    }
-
-    @Override
-    public boolean hasValues() {
-        maybeRebuildCache();
-        return values != null;
-    }
-
-    @Override
-    public Map<String, Object> getNamedValues() {
-
-        //TODO no more return values - build statements won't return any.
-        return null;
-    }
-
-    @Override
-    public boolean usesNamedValues() {
-        return false;
-    }
-
-
-    @Override
     public String toString() {
-        try {
-            if (forceNoValues)
-                return getQueryString();
-            // 1) try first with all values inlined (will not work if some values require custom codecs,
-            // or if the required codecs are registered in a different CodecRegistry instance than the default one)
-            return maybeAddSemicolon(buildQueryString(null)).toString();
-        } catch (RuntimeException e1) {
-            // 2) try next with bind markers for all values to avoid usage of custom codecs
-            try {
-                return maybeAddSemicolon(buildQueryString(new ArrayList<Object>())).toString();
-            } catch (RuntimeException e2) {
-                // Ugly but we have absolutely no context to get the registry from
-                return String.format("built query (could not generate with default codec registry: %s)", e2.getMessage());
-            }
-        }
+        return maybeAddSemicolon(buildQueryString()).toString();
     }
 
 
@@ -187,8 +117,8 @@ public abstract class BuiltStatement extends RegularStatement {
         }
 
         @Override
-        StringBuilder buildQueryString(List<Object> values) {
-            return statement.buildQueryString(values);
+        StringBuilder buildQueryString() {
+            return statement.buildQueryString();
         }
 
         @Override
@@ -199,16 +129,6 @@ public abstract class BuiltStatement extends RegularStatement {
         @Override
         boolean isCounterOp() {
             return statement.isCounterOp();
-        }
-
-        @Override
-        public Object[] getValues() {
-            return statement.getValues();
-        }
-
-        @Override
-        public boolean hasValues() {
-            return statement.hasValues();
         }
 
         @Override

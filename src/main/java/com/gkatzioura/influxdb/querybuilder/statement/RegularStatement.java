@@ -16,22 +16,12 @@
 
 package com.gkatzioura.influxdb.querybuilder.statement;
 
-import java.util.Map;
-
 public abstract class RegularStatement extends Statement {
 
     protected RegularStatement() {
     }
 
     public abstract String getQueryString();
-
-    public abstract Object[] getValues();
-
-    public abstract Map<String, Object> getNamedValues();
-
-    public abstract boolean hasValues();
-
-    public abstract boolean usesNamedValues();
 
     @Override
     public String toString() {

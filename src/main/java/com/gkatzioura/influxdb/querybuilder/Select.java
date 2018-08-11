@@ -57,7 +57,7 @@ public class Select extends BuiltStatement {
     }
 
     @Override
-    StringBuilder buildQueryString(List<Object> variables) {
+    StringBuilder buildQueryString() {
         StringBuilder builder = new StringBuilder();
 
         builder.append("SELECT ");
@@ -76,7 +76,7 @@ public class Select extends BuiltStatement {
 
         if (!where.clauses.isEmpty()) {
             builder.append(" WHERE ");
-            Utils.joinAndAppend(builder, " AND ", where.clauses, variables);
+            Utils.joinAndAppend(builder, " AND ", where.clauses );
         }
 
         if (groupByColumns != null) {
@@ -86,7 +86,7 @@ public class Select extends BuiltStatement {
 
         if (ordering != null) {
             builder.append(" ORDER BY ");
-            Utils.joinAndAppend(builder, ",", Collections.singletonList(ordering), variables);
+            Utils.joinAndAppend(builder, ",", Collections.singletonList(ordering));
         }
 
         if (limit != null) {

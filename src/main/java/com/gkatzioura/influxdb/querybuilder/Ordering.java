@@ -16,8 +16,6 @@
 
 package com.gkatzioura.influxdb.querybuilder;
 
-import java.util.List;
-
 public class Ordering extends Utils.Appendeable {
 
     private final boolean isDesc;
@@ -33,7 +31,7 @@ public class Ordering extends Utils.Appendeable {
     }
 
     @Override
-    void appendTo(StringBuilder sb, List<Object> variables) {
+    void appendTo(StringBuilder sb) {
         Utils.appendName(TIME_KEY, sb);
         sb.append(isDesc ? " DESC" : " ASC");
     }
