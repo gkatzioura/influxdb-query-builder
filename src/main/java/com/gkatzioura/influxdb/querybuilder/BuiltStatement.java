@@ -22,7 +22,6 @@ public abstract class BuiltStatement extends Statement {
 
     private boolean dirty;
     private String cache;
-    Boolean isCounterOp;
 
     BuiltStatement(String database) {
         this.database = database;
@@ -58,10 +57,6 @@ public abstract class BuiltStatement extends Statement {
     }
 
     abstract StringBuilder buildQueryString();
-
-    boolean isCounterOp() {
-        return isCounterOp == null ? false : isCounterOp;
-    }
 
     void setDirty() {
         dirty = true;
@@ -100,11 +95,6 @@ public abstract class BuiltStatement extends Statement {
         @Override
         public String getDatabase() {
             return statement.getDatabase();
-        }
-
-        @Override
-        boolean isCounterOp() {
-            return statement.isCounterOp();
         }
 
         @Override
