@@ -18,19 +18,12 @@ package com.gkatzioura.influxdb.querybuilder;
 
 public abstract class Statement {
 
-    static final Statement DEFAULT = new Statement() {
-
-        @Override
-        public String getDatabase() {
-            return null;
-        }
-
-    };
-    
-    Statement() {
-    }
-
-
     public abstract String getDatabase();
 
+    public abstract String getQueryString();
+
+    @Override
+    public String toString() {
+        return getQueryString();
+    }
 }

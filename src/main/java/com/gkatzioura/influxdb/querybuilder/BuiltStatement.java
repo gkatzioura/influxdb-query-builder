@@ -16,7 +16,7 @@
 
 package com.gkatzioura.influxdb.querybuilder;
 
-public abstract class BuiltStatement extends RegularStatement {
+public abstract class BuiltStatement extends Statement {
 
     final String database;
 
@@ -46,8 +46,6 @@ public abstract class BuiltStatement extends RegularStatement {
     }
 
     static StringBuilder maybeAddSemicolon(StringBuilder sb) {
-        // Use the same test that String#trim() uses to determine
-        // if a character is a whitespace character.
         int l = sb.length();
         while (l > 0 && sb.charAt(l - 1) <= ' ')
             l -= 1;
