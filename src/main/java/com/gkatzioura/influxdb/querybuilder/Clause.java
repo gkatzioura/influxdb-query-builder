@@ -60,10 +60,6 @@ public abstract class Clause extends Utils.Appendeable {
             return value;
         }
 
-        @Override
-        boolean containsBindMarker() {
-            return Utils.containsBindMarker(value);
-        }
     }
 
     static class RegexClause extends AbstractClause {
@@ -88,9 +84,6 @@ public abstract class Clause extends Utils.Appendeable {
             Utils.appendValue(value, sb);
         }
 
-        @Override boolean containsBindMarker() {
-            return Utils.containsBindMarker(value);
-        }
     }
 
     static class ContainsClause extends RegexClause {
@@ -121,14 +114,6 @@ public abstract class Clause extends Utils.Appendeable {
         @Override
         Object firstValue() {
             return null;
-        }
-
-        @Override
-        boolean containsBindMarker() {
-            for (Object value : values)
-                if (Utils.containsBindMarker(value))
-                    return true;
-            return false;
         }
 
         @Override

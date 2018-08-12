@@ -54,8 +54,6 @@ abstract class Utils {
     static StringBuilder appendValue(Object value, StringBuilder sb) {
         if (value == null) {
             sb.append("null");
-        } else if (value instanceof BindMarker) {
-            sb.append(value);
         } else if (value instanceof FCall) {
             FCall fcall = (FCall) value;
             sb.append(fcall.name).append('(');
@@ -79,16 +77,6 @@ abstract class Utils {
             return sb;
         }
         return sb;
-    }
-
-    static boolean containsBindMarker(Object value) {
-        if (value instanceof BindMarker)
-            return true;
-        if (value instanceof FCall)
-            for (Object param : ((FCall) value).parameters)
-                if (containsBindMarker(param))
-                    return true;
-        return false;
     }
 
     static StringBuilder appendName(String name, StringBuilder sb) {
@@ -135,8 +123,6 @@ abstract class Utils {
 
     static abstract class Appendeable {
         abstract void appendTo(StringBuilder sb);
-
-        abstract boolean containsBindMarker();
     }
 
     static class RawString {

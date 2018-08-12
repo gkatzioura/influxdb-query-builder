@@ -23,7 +23,6 @@ public abstract class BuiltStatement extends RegularStatement {
     private boolean dirty;
     private String cache;
     Boolean isCounterOp;
-    boolean hasBindMarkers;
 
     BuiltStatement(String database) {
         this.database = database;
@@ -70,18 +69,6 @@ public abstract class BuiltStatement extends RegularStatement {
         dirty = true;
     }
 
-    void checkForBindMarkers(Object value) {
-        dirty = true;
-        if (Utils.containsBindMarker(value))
-            hasBindMarkers = true;
-    }
-
-    void checkForBindMarkers(Utils.Appendeable value) {
-        dirty = true;
-        if (value != null && value.containsBindMarker())
-            hasBindMarkers = true;
-    }
-
     @Override
     public String getDatabase() {
         return database;
@@ -120,16 +107,6 @@ public abstract class BuiltStatement extends RegularStatement {
         @Override
         boolean isCounterOp() {
             return statement.isCounterOp();
-        }
-
-        @Override
-        void checkForBindMarkers(Object value) {
-            statement.checkForBindMarkers(value);
-        }
-
-        @Override
-        void checkForBindMarkers(Utils.Appendeable value) {
-            statement.checkForBindMarkers(value);
         }
 
         @Override

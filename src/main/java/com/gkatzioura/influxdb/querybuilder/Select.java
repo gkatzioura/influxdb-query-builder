@@ -142,7 +142,6 @@ public class Select extends BuiltStatement {
 
         public Where and(Clause clause) {
             clauses.add(clause);
-            checkForBindMarkers(clause);
             return this;
         }
 

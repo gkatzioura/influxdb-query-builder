@@ -19,7 +19,12 @@ package com.gkatzioura.influxdb.querybuilder;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.gkatzioura.influxdb.querybuilder.Operations.*;
+import static com.gkatzioura.influxdb.querybuilder.Operations.EQ;
+import static com.gkatzioura.influxdb.querybuilder.Operations.GT;
+import static com.gkatzioura.influxdb.querybuilder.Operations.GTE;
+import static com.gkatzioura.influxdb.querybuilder.Operations.LT;
+import static com.gkatzioura.influxdb.querybuilder.Operations.LTE;
+import static com.gkatzioura.influxdb.querybuilder.Operations.NE;
 
 
 public final class QueryBuilder {
@@ -116,14 +121,6 @@ public final class QueryBuilder {
      */
     public static Ordering desc() {
         return new Ordering( true);
-    }
-
-    public static BindMarker bindMarker() {
-        return BindMarker.ANONYMOUS;
-    }
-
-    public static BindMarker bindMarker(String name) {
-        return new BindMarker(name);
     }
 
     public static Object raw(String str) {

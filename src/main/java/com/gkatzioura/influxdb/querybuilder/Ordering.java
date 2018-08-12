@@ -36,9 +36,4 @@ public class Ordering extends Utils.Appendeable {
         sb.append(isDesc ? " DESC" : " ASC");
     }
 
-    @Override
-    boolean containsBindMarker() {
-        return false;
-    }
-
 }
