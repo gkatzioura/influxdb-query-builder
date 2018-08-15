@@ -31,16 +31,13 @@ import org.junit.jupiter.api.Test;
 import static com.gkatzioura.influxdb.querybuilder.QueryBuilder.eq;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UtilsTest {
+public class AppenderTest {
 
     @Test
     public void testJoinAndAppend() {
-
         StringBuilder builder = new StringBuilder();
         builder.append("SELECT test1,test2 FROM foo WHERE ");
-
-        Utils.joinAndAppend(builder, " AND ", Collections.singletonList(eq("testval", "test1")));
-
+        Appender.joinAndAppend(builder, " AND ", Collections.singletonList(eq("testval", "test1")));
         assertEquals("SELECT test1,test2 FROM foo WHERE testval='test1'",builder.toString());
     }
 
