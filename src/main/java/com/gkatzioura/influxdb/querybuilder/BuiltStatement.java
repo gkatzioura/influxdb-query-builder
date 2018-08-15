@@ -28,28 +28,15 @@ public abstract class BuiltStatement extends Statement {
 
     final String database;
 
-    private boolean dirty;
-    private String cache;
-
     BuiltStatement(String database) {
         this.database = database;
     }
 
     @Override
     public String getQueryString() {
-        maybeRebuildCache();
-        return cache;
-    }
-
-    private void maybeRebuildCache() {
-        if (!dirty && cache != null)
-            return;
-
         StringBuilder sb = buildQueryString();
         addSemicolonIfNeeded(sb);
-
-        cache = sb.toString();
-        dirty = false;
+        return sb.toString();
     }
 
     static StringBuilder addSemicolonIfNeeded(StringBuilder sb) {
@@ -65,10 +52,6 @@ public abstract class BuiltStatement extends Statement {
     }
 
     abstract StringBuilder buildQueryString();
-
-    void setDirty() {
-        dirty = true;
-    }
 
     @Override
     public String getDatabase() {

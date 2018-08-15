@@ -29,20 +29,11 @@ import java.util.List;
 
 public abstract class Clause extends Utils.Appendeable {
 
-    abstract String name();
-
-    abstract Object firstValue();
-
     private static abstract class AbstractClause extends Clause {
         final String name;
 
         private AbstractClause(String name) {
             this.name = name;
-        }
-
-        @Override
-        String name() {
-            return name;
         }
     }
 
@@ -63,11 +54,6 @@ public abstract class Clause extends Utils.Appendeable {
             Utils.appendValue(value, sb);
         }
 
-        @Override
-        Object firstValue() {
-            return value;
-        }
-
     }
 
     static class RegexClause extends AbstractClause {
@@ -80,11 +66,6 @@ public abstract class Clause extends Utils.Appendeable {
 
             if (value == null)
                 throw new IllegalArgumentException("Missing value for regex clause");
-        }
-
-        @Override
-        Object firstValue() {
-            return value;
         }
 
         @Override void appendTo(StringBuilder sb) {
@@ -112,16 +93,6 @@ public abstract class Clause extends Utils.Appendeable {
             this.values = values;
             if (this.names.size() != this.values.size())
                 throw new IllegalArgumentException(String.format("The number of names (%d) and values (%d) don't match", this.names.size(), this.values.size()));
-        }
-
-        @Override
-        String name() {
-            return null;
-        }
-
-        @Override
-        Object firstValue() {
-            return null;
         }
 
         @Override

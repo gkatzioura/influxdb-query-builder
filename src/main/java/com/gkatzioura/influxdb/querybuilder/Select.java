@@ -126,7 +126,6 @@ public class Select extends BuiltStatement {
             throw new IllegalStateException("A LIMIT value has already been provided");
 
         this.limit = limit;
-        setDirty();
         return this;
     }
 
@@ -136,7 +135,6 @@ public class Select extends BuiltStatement {
 
         this.limit = limit;
         this.offSet = offSet;
-        setDirty();
         return this;
     }
 
