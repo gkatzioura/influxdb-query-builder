@@ -50,20 +50,11 @@ abstract class Utils {
         return sb;
     }
 
-    static StringBuilder joinAndAppendValues(StringBuilder sb, List<?> values) {
-        for (int i = 0; i < values.size(); i++) {
-            if (i > 0)
-                sb.append(",");
-            appendValue(values.get(i), sb);
-        }
-        return sb;
-    }
-
     static StringBuilder appendValue(Object value, StringBuilder sb) {
         if (value == null) {
             sb.append("null");
-        } else if (value instanceof FCall) {
-            FCall fcall = (FCall) value;
+        } else if (value instanceof Function) {
+            Function fcall = (Function) value;
             sb.append(fcall.name).append('(');
             for (int i = 0; i < fcall.parameters.length; i++) {
                 if (i > 0)
@@ -71,9 +62,8 @@ abstract class Utils {
                 appendValue(fcall.parameters[i], sb);
             }
             sb.append(')');
-            //CName?
-        } else if (value instanceof CName) {
-            appendName(((CName) value).name, sb);
+        } else if (value instanceof Column) {
+            appendName(((Column) value).name, sb);
         } else if (value instanceof RawString) {
             sb.append(value.toString());
         } else if (value instanceof String ) {
@@ -99,8 +89,8 @@ abstract class Utils {
     static StringBuilder appendName(Object name, StringBuilder sb) {
         if (name instanceof String) {
             appendName((String) name, sb);
-        } else if (name instanceof CName) {
-            appendName(((CName) name).name, sb);
+        } else if (name instanceof Column) {
+            appendName(((Column) name).name, sb);
         } else if (name instanceof Path) {
             String[] segments = ((Path) name).segments;
             for (int i = 0; i < segments.length; i++) {
@@ -108,8 +98,8 @@ abstract class Utils {
                     sb.append('.');
                 appendName(segments[i], sb);
             }
-        } else if (name instanceof FCall) {
-            FCall fcall = (FCall) name;
+        } else if (name instanceof Function) {
+            Function fcall = (Function) name;
             sb.append(fcall.name).append('(');
             for (int i = 0; i < fcall.parameters.length; i++) {
                 if (i > 0)
@@ -146,12 +136,13 @@ abstract class Utils {
         }
     }
 
-    static class FCall {
+
+    static class Function {
 
         private final String name;
         private final Object[] parameters;
 
-        FCall(String name, Object... parameters) {
+        Function(String name, Object... parameters) {
             this.name = name;
             this.parameters = parameters;
         }
@@ -171,10 +162,11 @@ abstract class Utils {
 
     }
 
-    static class CName {
+
+    static class Column {
         private final String name;
 
-        CName(String name) {
+        Column(String name) {
             this.name = name;
         }
 

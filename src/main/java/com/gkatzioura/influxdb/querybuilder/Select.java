@@ -32,7 +32,7 @@ import java.util.List;
 
 public class Select extends BuiltStatement {
 
-    private static final List<Object> COUNT_ALL = Collections.singletonList(new Utils.FCall("count", new Utils.RawString("*")));
+    private static final List<Object> COUNT_ALL = Collections.singletonList(new Utils.Function("count", new Utils.RawString("*")));
 
     private final String table;
     private final boolean isDistinct;
@@ -315,7 +315,7 @@ public class Select extends BuiltStatement {
 
         @Override
         public SelectionOrAlias fcall(String name, Object... parameters) {
-            return queueName(new Utils.FCall(name, parameters));
+            return queueName(new Utils.Function(name, parameters));
         }
 
         @Override
