@@ -132,53 +132,53 @@ public final class QueryBuilder {
     }
 
     public static Object raw(String str) {
-        return new Utils.RawString(str);
+        return new RawString(str);
     }
 
     public static Object fcall(String name, Object... parameters) {
-        return new Utils.Function(name, parameters);
+        return new Function(name, parameters);
     }
 
     public static Object now() {
-        return new Utils.Function("now");
+        return new Function("now");
     }
 
     public static Object column(String name) {
-        return new Utils.Column(name);
+        return new Column(name);
     }
 
     public static Object alias(Object column, String alias) {
-        return new Utils.Alias(column, alias);
+        return new Alias(column, alias);
     }
 
     public static Object count(Object column) {
         if (column instanceof String)
             column = column(((String) column));
-        return new Utils.Function("COUNT", column);
+        return new Function("COUNT", column);
     }
 
     public static Object max(Object column) {
         if (column instanceof String)
             column = column(((String) column));
-        return new Utils.Function("MAX", column);
+        return new Function("MAX", column);
     }
 
     public static Object min(Object column) {
         if (column instanceof String)
             column = column(((String) column));
-        return new Utils.Function("MIN", column);
+        return new Function("MIN", column);
     }
 
     public static Object sum(Object column) {
         if (column instanceof String)
             column = column(((String) column));
-        return new Utils.Function("SUM", column);
+        return new Function("SUM", column);
     }
 
     public static Object mean(Object column) {
         if (column instanceof String)
             column = column(((String) column));
-        return new Utils.Function("MEAN", column);
+        return new Function("MEAN", column);
     }
 
 }

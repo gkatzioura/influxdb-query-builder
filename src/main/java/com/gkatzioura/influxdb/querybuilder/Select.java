@@ -32,7 +32,7 @@ import java.util.List;
 
 public class Select extends BuiltStatement {
 
-    private static final List<Object> COUNT_ALL = Collections.singletonList(new Utils.Function("count", new Utils.RawString("*")));
+    private static final List<Object> COUNT_ALL = Collections.singletonList(new Function("count", new RawString("*")));
 
     private final String table;
     private final boolean isDistinct;
@@ -258,7 +258,7 @@ public class Select extends BuiltStatement {
 
         public Selection as(String alias) {
             assert previousSelection != null;
-            Object a = new Utils.Alias(previousSelection, alias);
+            Object a = new Alias(previousSelection, alias);
             previousSelection = null;
             return addName(a);
         }
@@ -315,7 +315,7 @@ public class Select extends BuiltStatement {
 
         @Override
         public SelectionOrAlias fcall(String name, Object... parameters) {
-            return queueName(new Utils.Function(name, parameters));
+            return queueName(new Function(name, parameters));
         }
 
         @Override

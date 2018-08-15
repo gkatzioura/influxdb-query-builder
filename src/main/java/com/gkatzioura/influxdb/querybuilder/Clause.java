@@ -27,7 +27,7 @@ package com.gkatzioura.influxdb.querybuilder;
 import java.util.List;
 
 
-public abstract class Clause implements Appendeable {
+public abstract class Clause implements Appendable {
 
     private static abstract class AbstractClause extends Clause {
         final String name;
@@ -58,11 +58,11 @@ public abstract class Clause implements Appendeable {
 
     static class RegexClause extends AbstractClause {
 
-        private final Utils.RawString value;
+        private final RawString value;
 
         RegexClause(String name, String value) {
             super(name);
-            this.value = new Utils.RawString(value);
+            this.value = new RawString(value);
 
             if (value == null)
                 throw new IllegalArgumentException("Missing value for regex clause");

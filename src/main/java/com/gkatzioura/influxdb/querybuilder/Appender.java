@@ -1,3 +1,27 @@
+/**
+ * MIT License
+ * <p>
+ * Copyright (c) 2018 Emmanouil Gkatziouras
+ * <p>
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * <p>
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * <p>
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE
+ */
+
 package com.gkatzioura.influxdb.querybuilder;
 
 import java.util.List;
@@ -7,7 +31,7 @@ public class Appender {
 
     private static final Pattern cnamePattern = Pattern.compile("\\w+(?:\\[.+\\])?");
 
-    static StringBuilder joinAndAppend(StringBuilder sb, String separator, List<? extends Appendeable> values) {
+    static StringBuilder joinAndAppend(StringBuilder sb, String separator, List<? extends Appendable> values) {
         for (int i = 0; i < values.size(); i++) {
             if (i > 0)
                 sb.append(separator);
@@ -28,8 +52,8 @@ public class Appender {
     static StringBuilder appendValue(Object value, StringBuilder sb) {
         if (value == null) {
             sb.append("null");
-        } else if (value instanceof Utils.Function) {
-            Utils.Function fcall = (Utils.Function) value;
+        } else if (value instanceof Function) {
+            Function fcall = (Function) value;
             sb.append(fcall.getName()).append('(');
             for (int i = 0; i < fcall.getParameters().length; i++) {
                 if (i > 0)
@@ -37,9 +61,9 @@ public class Appender {
                 appendValue(fcall.getParameters()[i], sb);
             }
             sb.append(')');
-        } else if (value instanceof Utils.Column) {
-            appendName(((Utils.Column) value).getName(), sb);
-        } else if (value instanceof Utils.RawString) {
+        } else if (value instanceof Column) {
+            appendName(((Column) value).getName(), sb);
+        } else if (value instanceof RawString) {
             sb.append(value.toString());
         } else if (value instanceof String) {
             sb.append("'").append(value).append("'");
@@ -64,17 +88,17 @@ public class Appender {
     static StringBuilder appendName(Object name, StringBuilder sb) {
         if (name instanceof String) {
             appendName((String) name, sb);
-        } else if (name instanceof Utils.Column) {
-            appendName(((Utils.Column) name).getName(), sb);
-        } else if (name instanceof Utils.Path) {
-            String[] segments = ((Utils.Path) name).getSegments();
+        } else if (name instanceof Column) {
+            appendName(((Column) name).getName(), sb);
+        } else if (name instanceof Path) {
+            String[] segments = ((Path) name).getSegments();
             for (int i = 0; i < segments.length; i++) {
                 if (i > 0)
                     sb.append('.');
                 appendName(segments[i], sb);
             }
-        } else if (name instanceof Utils.Function) {
-            Utils.Function fcall = (Utils.Function) name;
+        } else if (name instanceof Function) {
+            Function fcall = (Function) name;
             sb.append(fcall.getName()).append('(');
             for (int i = 0; i < fcall.getParameters().length; i++) {
                 if (i > 0)
@@ -82,11 +106,11 @@ public class Appender {
                 appendValue(fcall.getParameters()[i], sb);
             }
             sb.append(')');
-        } else if (name instanceof Utils.Alias) {
-            Utils.Alias alias = (Utils.Alias) name;
+        } else if (name instanceof Alias) {
+            Alias alias = (Alias) name;
             appendName(alias.getColumn(), sb);
             sb.append(" AS ").append(alias.getAlias());
-        } else if (name instanceof Utils.RawString) {
+        } else if (name instanceof RawString) {
             sb.append(name);
         } else {
             throw new IllegalArgumentException(String.format("Invalid column %s of type unknown of the query builder", name));

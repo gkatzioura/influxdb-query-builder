@@ -24,7 +24,7 @@
 
 package com.gkatzioura.influxdb.querybuilder;
 
-public class Ordering implements Appendeable {
+public class Ordering implements Appendable {
 
     private final boolean isDesc;
 

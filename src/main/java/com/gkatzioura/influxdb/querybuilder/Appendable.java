@@ -1,6 +1,6 @@
 package com.gkatzioura.influxdb.querybuilder;
 
-public interface Appendeable {
+interface Appendable {
 
     void appendTo(StringBuilder sb);
 }
