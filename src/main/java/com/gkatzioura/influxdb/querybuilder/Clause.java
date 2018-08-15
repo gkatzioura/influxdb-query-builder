@@ -27,7 +27,7 @@ package com.gkatzioura.influxdb.querybuilder;
 import java.util.List;
 
 
-public abstract class Clause extends Utils.Appendeable {
+public abstract class Clause implements Appendeable {
 
     private static abstract class AbstractClause extends Clause {
         final String name;
@@ -49,9 +49,9 @@ public abstract class Clause extends Utils.Appendeable {
         }
 
         @Override
-        void appendTo(StringBuilder sb) {
-            Utils.appendName(name, sb).append(op);
-            Utils.appendValue(value, sb);
+        public void appendTo(StringBuilder sb) {
+            Appender.appendName(name, sb).append(op);
+            Appender.appendValue(value, sb);
         }
 
     }
@@ -68,9 +68,10 @@ public abstract class Clause extends Utils.Appendeable {
                 throw new IllegalArgumentException("Missing value for regex clause");
         }
 
-        @Override void appendTo(StringBuilder sb) {
-            Utils.appendName(name, sb).append(" =~ ");
-            Utils.appendValue(value, sb);
+        @Override
+        public void appendTo(StringBuilder sb) {
+            Appender.appendName(name, sb).append(" =~ ");
+            Appender.appendValue(value, sb);
         }
 
     }
@@ -96,18 +97,18 @@ public abstract class Clause extends Utils.Appendeable {
         }
 
         @Override
-        void appendTo(StringBuilder sb) {
+        public void appendTo(StringBuilder sb) {
             sb.append("(");
             for (int i = 0; i < names.size(); i++) {
                 if (i > 0)
                     sb.append(",");
-                Utils.appendName(names.get(i), sb);
+                Appender.appendName(names.get(i), sb);
             }
             sb.append(")").append(op).append("(");
             for (int i = 0; i < values.size(); i++) {
                 if (i > 0)
                     sb.append(",");
-                Utils.appendValue(values.get(i), sb);
+                Appender.appendValue(values.get(i), sb);
             }
             sb.append(")");
         }

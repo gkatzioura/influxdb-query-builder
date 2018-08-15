@@ -55,7 +55,7 @@ public final class QueryBuilder {
     public static String token(String columnName) {
         StringBuilder sb = new StringBuilder();
         sb.append("token(");
-        Utils.appendName(columnName, sb);
+        Appender.appendName(columnName, sb);
         sb.append(')');
         return sb.toString();
     }

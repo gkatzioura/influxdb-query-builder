@@ -66,25 +66,25 @@ public class Select extends BuiltStatement {
         if (columns == null) {
             builder.append('*');
         } else {
-            Utils.joinAndAppendNames(builder, columns);
+            Appender.joinAndAppendNames(builder, columns);
         }
         builder.append(" FROM ");
 
-        Utils.appendName(table, builder);
+        Appender.appendName(table, builder);
 
         if (!where.clauses.isEmpty()) {
             builder.append(" WHERE ");
-            Utils.joinAndAppend(builder, " AND ", where.clauses );
+            Appender.joinAndAppend(builder, " AND ", where.clauses);
         }
 
         if (groupByColumns != null) {
             builder.append(" GROUP BY ");
-            Utils.joinAndAppendNames(builder, groupByColumns);
+            Appender.joinAndAppendNames(builder, groupByColumns);
         }
 
         if (ordering != null) {
             builder.append(" ORDER BY ");
-            Utils.joinAndAppend(builder, ",", Collections.singletonList(ordering));
+            Appender.joinAndAppend(builder, ",", Collections.singletonList(ordering));
         }
 
         if (limit != null) {
