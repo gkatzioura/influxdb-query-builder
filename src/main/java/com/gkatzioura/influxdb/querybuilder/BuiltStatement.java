@@ -46,13 +46,13 @@ public abstract class BuiltStatement extends Statement {
             return;
 
         StringBuilder sb = buildQueryString();
-        maybeAddSemicolon(sb);
+        addSemicolonIfNeeded(sb);
 
         cache = sb.toString();
         dirty = false;
     }
 
-    static StringBuilder maybeAddSemicolon(StringBuilder sb) {
+    static StringBuilder addSemicolonIfNeeded(StringBuilder sb) {
         int l = sb.length();
         while (l > 0 && sb.charAt(l - 1) <= ' ')
             l -= 1;
@@ -77,7 +77,7 @@ public abstract class BuiltStatement extends Statement {
 
     @Override
     public String toString() {
-        return maybeAddSemicolon(buildQueryString()).toString();
+        return addSemicolonIfNeeded(buildQueryString()).toString();
     }
 
 
