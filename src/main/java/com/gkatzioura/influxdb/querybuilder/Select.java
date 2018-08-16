@@ -291,11 +291,6 @@ public class Select extends BuiltStatement {
 
         @Override
         public SelectionOrAlias column(String name) {
-
-            if(isDistinct) {
-                throw new IllegalStateException("aggregate function distinct() cannot be combined with other functions or fields");
-            }
-
             return queueName(name);
         }
 
