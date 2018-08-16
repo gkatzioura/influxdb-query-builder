@@ -38,7 +38,6 @@ public abstract class Clause implements Appendable {
     }
 
     static class SimpleClause extends AbstractClause {
-
         private final String op;
         private final Object value;
 
@@ -57,7 +56,6 @@ public abstract class Clause implements Appendable {
     }
 
     static class RegexClause extends AbstractClause {
-
         private final RawString value;
 
         RegexClause(String name, String value) {
@@ -70,10 +68,29 @@ public abstract class Clause implements Appendable {
 
         @Override
         public void appendTo(StringBuilder sb) {
-            Appender.appendName(name, sb).append(" =~ ");
+            Appender.appendName(name, sb).append(" ").append(Operations.EQR).append(" ");
             Appender.appendValue(value, sb);
         }
 
+    }
+
+
+    static class NegativeRegexClause extends AbstractClause {
+        private final RawString value;
+
+        NegativeRegexClause(String name, String value) {
+            super(name);
+            this.value = new RawString(value);
+
+            if (value == null)
+                throw new IllegalArgumentException("Missing value for regex clause");
+        }
+
+        @Override
+        public void appendTo(StringBuilder sb) {
+            Appender.appendName(name, sb).append(" ").append(Operations.NER).append(" ");
+            Appender.appendValue(value, sb);
+        }
     }
 
     static class ContainsClause extends RegexClause {

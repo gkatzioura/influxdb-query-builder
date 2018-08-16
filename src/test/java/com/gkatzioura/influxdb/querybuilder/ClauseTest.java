@@ -27,6 +27,7 @@ package com.gkatzioura.influxdb.querybuilder;
 import org.junit.jupiter.api.Test;
 
 import static com.gkatzioura.influxdb.querybuilder.QueryBuilder.contains;
+import static com.gkatzioura.influxdb.querybuilder.QueryBuilder.nregex;
 import static com.gkatzioura.influxdb.querybuilder.QueryBuilder.regex;
 import static com.gkatzioura.influxdb.querybuilder.QueryBuilder.select;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -38,6 +39,13 @@ public class ClauseTest {
         String query = "SELECT MAX(k) FROM foo WHERE k =~ /[0-9]/;";
         Statement select = select().max("k").from("foo").where(regex("k", "/[0-9]/"));
         assertEquals(query,select.toString());
+    }
+
+    @Test
+    public void testNegativeRegex() {
+        String query = "SELECT MAX(k) FROM foo WHERE k ~! /[0-9]/;";
+        Statement select = select().max("k").from("foo").where(nregex("k", "/[0-9]/"));
+        assertEquals(query, select.toString());
     }
 
     @Test

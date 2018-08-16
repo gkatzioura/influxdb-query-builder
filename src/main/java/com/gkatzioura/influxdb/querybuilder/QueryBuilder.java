@@ -84,6 +84,10 @@ public final class QueryBuilder {
         return new Clause.RegexClause(name, value);
     }
 
+    public static Clause nregex(String name, String value) {
+        return new Clause.NegativeRegexClause(name, value);
+    }
+
     public static Clause lt(String name, Object value) {
         return new Clause.SimpleClause(name, LT, value);
     }
