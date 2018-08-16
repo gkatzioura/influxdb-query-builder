@@ -1,6 +1,6 @@
 package com.gkatzioura.influxdb.querybuilder;
 
-public class Alias {
+class Alias {
     private final Object column;
     private final String alias;
 

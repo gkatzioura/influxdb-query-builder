@@ -112,6 +112,10 @@ public class Appender {
             sb.append(" AS ").append(alias.getAlias());
         } else if (name instanceof RawString) {
             sb.append(name);
+        } else if (name instanceof Distinct) {
+            Distinct distinct = (Distinct) name;
+            sb.append("DISTINCT ");
+            appendName(distinct.getExpression(), sb);
         } else {
             throw new IllegalArgumentException(String.format("Invalid column %s of type unknown of the query builder", name));
         }

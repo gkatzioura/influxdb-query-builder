@@ -61,7 +61,9 @@ public class Select extends BuiltStatement {
         builder.append("SELECT ");
 
         if (isDistinct)
-            builder.append("DISTINCT ");
+            if (columns.size() > 1) {
+                throw new IllegalStateException("DISTINCT function can only be used with one column");
+            }
 
         if (columns == null) {
             builder.append('*');
@@ -180,17 +182,6 @@ public class Select extends BuiltStatement {
             this.columnNames = columnNames;
         }
 
-        public Builder distinct(String column) {
-
-            if(columnNames!=null) {
-                throw new IllegalStateException("DISTINCT function can only be used with one column");
-            }
-
-            this.columnNames = Collections.singletonList(column);
-            this.isDistinct = true;
-            return this;
-        }
-
         public Select from(String table) {
             return from(null, table);
         }
@@ -202,19 +193,6 @@ public class Select extends BuiltStatement {
     }
 
     public static abstract class Selection extends Builder {
-
-        //TODO make it more elegant
-        @Override
-        public Selection distinct(String column) {
-
-            if (columnNames != null) {
-                throw new IllegalStateException("DISTINCT function can only be used with one column");
-            }
-
-            this.columnNames = Collections.singletonList(column);
-            this.isDistinct = true;
-            return this;
-        }
 
         public abstract Builder all();
 
@@ -256,11 +234,19 @@ public class Select extends BuiltStatement {
 
         private Object previousSelection;
 
-        public Selection as(String alias) {
+        public Selection distinct() {
+            this.isDistinct = true;
             assert previousSelection != null;
-            Object a = new Alias(previousSelection, alias);
+            Object distinct = new Distinct(previousSelection);
             previousSelection = null;
-            return addName(a);
+            return addName(distinct);
+        }
+
+        public Selection as(String aliasName) {
+            assert previousSelection != null;
+            Object alias = new Alias(previousSelection, aliasName);
+            previousSelection = null;
+            return addName(alias);
         }
 
         // We don't return SelectionOrAlias on purpose

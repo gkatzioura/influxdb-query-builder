@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Test;
 
 import static com.gkatzioura.influxdb.querybuilder.QueryBuilder.select;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SelectTest {
 
@@ -66,29 +65,13 @@ public class SelectTest {
 
     @Test
     public void testLimitOffset() {
-
         String query = "SELECT test1 FROM foo GROUP BY test2,test3 LIMIT 1 OFFSET 20;";
         Statement select = select().column("test1").from("foo").groupBy("test2","test3").limit(1,20);
         assertEquals(query,select.toString());
     }
 
     @Test
-    public void testFailedDistinct() {
-
-        assertThrows(IllegalStateException.class,() -> select().column("test1").column("test2").distinct("test3").from("foo"));
-    }
-
-    @Test
-    public void testDistinct() {
-
-        String query = "SELECT DISTINCT test1 FROM foo LIMIT 1 OFFSET 20;";
-        Statement select = select().distinct("test1").from("foo").limit(1,20);
-        assertEquals(query,select.toString());
-    }
-
-    @Test
     public void testCount() {
-
         String query = "SELECT COUNT(test1) FROM foo LIMIT 1 OFFSET 20;";
         Statement select = select().count("test1").from("foo").limit(1,20);
         assertEquals(query,select.toString());
@@ -125,12 +108,4 @@ public class SelectTest {
         assertEquals(query,select.toString());
     }
 
-    @Test
-    public void testDistinctFunction() {
-
-        //TODO
-        //       String query = "SELECT DISTINCT MAX(test1) FROM foo LIMIT 1 OFFSET 20;";
-        //       Statement select = select().max("test1").min("test2").count("test3").sum("test4").from("foo").limit(1, 20);
-        //       assertEquals(query, select.toString());
-    }
 }
