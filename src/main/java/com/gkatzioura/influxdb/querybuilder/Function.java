@@ -24,7 +24,7 @@
 
 package com.gkatzioura.influxdb.querybuilder;
 
-public class Function {
+class Function {
 
     private final String name;
     private final Object[] parameters;

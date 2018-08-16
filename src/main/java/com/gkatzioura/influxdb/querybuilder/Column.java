@@ -24,7 +24,7 @@
 
 package com.gkatzioura.influxdb.querybuilder;
 
-public class Column {
+class Column {
 
     private final String name;
 

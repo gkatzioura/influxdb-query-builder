@@ -90,20 +90,13 @@ public class Appender {
             appendName((String) name, sb);
         } else if (name instanceof Column) {
             appendName(((Column) name).getName(), sb);
-        } else if (name instanceof Path) {
-            String[] segments = ((Path) name).getSegments();
-            for (int i = 0; i < segments.length; i++) {
-                if (i > 0)
-                    sb.append('.');
-                appendName(segments[i], sb);
-            }
         } else if (name instanceof Function) {
-            Function fcall = (Function) name;
-            sb.append(fcall.getName()).append('(');
-            for (int i = 0; i < fcall.getParameters().length; i++) {
+            Function functionCall = (Function) name;
+            sb.append(functionCall.getName()).append('(');
+            for (int i = 0; i < functionCall.getParameters().length; i++) {
                 if (i > 0)
                     sb.append(',');
-                appendValue(fcall.getParameters()[i], sb);
+                appendValue(functionCall.getParameters()[i], sb);
             }
             sb.append(')');
         } else if (name instanceof Alias) {
