@@ -140,7 +140,7 @@ public class Select extends BuiltStatement {
         return this;
     }
 
-    public static class Where extends ForwardingStatementDecorator<Select> {
+    public static class Where extends StatementDecorator<Select> {
 
         private final List<Clause> clauses = new ArrayList<Clause>();
 

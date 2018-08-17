@@ -64,11 +64,11 @@ public abstract class BuiltStatement extends Statement {
     }
 
 
-    abstract static class ForwardingStatementDecorator<T extends BuiltStatement> extends BuiltStatement {
+    abstract static class StatementDecorator<T extends BuiltStatement> extends BuiltStatement {
 
         T statement;
 
-        ForwardingStatementDecorator(T statement) {
+        StatementDecorator(T statement) {
             super(null);
             this.statement = statement;
         }
